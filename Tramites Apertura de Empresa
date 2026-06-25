@@ -1,1 +1,147 @@
+DECLARE @FechaInicio DATETIME = NULL;
+DECLARE @FechaFin    DATETIME = NULL;
 
+SELECT
+    'Trámites Apertura de Empresa' AS Bloque,
+    1 AS Orden,
+    21 AS IdClaseProceso,
+    'Certificado Veterinario de Operación (CVO)' AS NombreTramite,
+    COUNT(P.ID) AS Cantidad
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+WHERE P.IdClaseProceso = 21
+  AND P.IdEstado IN (0,1,2)
+  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
+  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+
+UNION ALL
+
+SELECT
+    'Trámites Apertura de Empresa',
+    2,
+    36,
+    'Patente Comercial',
+    COUNT(P.ID)
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+INNER JOIN Panel_36 P36 WITH (NOLOCK)
+    ON P36._ElementID = P.ID
+WHERE P.IdClaseProceso = 36
+  AND P.IdEstado IN (0,1,2)
+  AND P36.[3_Tipo de trámite] = 2054
+  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
+  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+
+UNION ALL
+
+SELECT
+    'Trámites Apertura de Empresa',
+    3,
+    36,
+    'Patente Comercial Cambio de Ubicación',
+    COUNT(P.ID)
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+INNER JOIN Panel_36 P36 WITH (NOLOCK)
+    ON P36._ElementID = P.ID
+WHERE P.IdClaseProceso = 36
+  AND P.IdEstado IN (0,1,2)
+  AND P36.[3_Tipo de trámite] = 2059
+  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
+  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+
+UNION ALL
+
+SELECT
+    'Trámites Apertura de Empresa',
+    4,
+    36,
+    'Patente Comercial Cambio de Actividad',
+    COUNT(P.ID)
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+INNER JOIN Panel_36 P36 WITH (NOLOCK)
+    ON P36._ElementID = P.ID
+WHERE P.IdClaseProceso = 36
+  AND P.IdEstado IN (0,1,2)
+  AND P36.[3_Tipo de trámite] = 2057
+  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
+  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+
+UNION ALL
+
+SELECT
+    'Trámites Apertura de Empresa',
+    5,
+    36,
+    'Licencia de Licores',
+    COUNT(P.ID)
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+INNER JOIN Panel_36 P36 WITH (NOLOCK)
+    ON P36._ElementID = P.ID
+WHERE P.IdClaseProceso = 36
+  AND P.IdEstado IN (0,1,2)
+  AND P36.[3_Tipo de trámite] = 2055
+  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
+  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+
+UNION ALL
+
+SELECT
+    'Trámites Apertura de Empresa',
+    6,
+    20,
+    'Permiso Sanitario de Funcionamiento',
+    COUNT(P.ID)
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+INNER JOIN Panel_20 P20 WITH (NOLOCK)
+    ON P20._ElementID = P.ID
+INNER JOIN Panel_20_o1 P1 WITH (NOLOCK)
+    ON P20.ID = P1._BaseTableRegisterID
+INNER JOIN Panel_20_o4 P4 WITH (NOLOCK)
+    ON P4._BaseTableRegisterID = P1._BaseTableRegisterID
+WHERE P.IdClaseProceso = 20
+  AND P.IdEstado IN (0,1,2)
+  AND P4.[3_Tipo de trámite PSF Hab] = 12739
+  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
+  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+
+UNION ALL
+
+SELECT
+    'Trámites Apertura de Empresa',
+    10,
+    20,
+    'Permiso de Habilitación',
+    COUNT(P.ID)
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+INNER JOIN Panel_20 P20 WITH (NOLOCK)
+    ON P20._ElementID = P.ID
+INNER JOIN Panel_20_o1 P1 WITH (NOLOCK)
+    ON P20.ID = P1._BaseTableRegisterID
+INNER JOIN Panel_20_o4 P4 WITH (NOLOCK)
+    ON P4._BaseTableRegisterID = P1._BaseTableRegisterID
+WHERE P.IdClaseProceso = 20
+  AND P.IdEstado IN (0,1,2)
+  AND P4.[3_Tipo de trámite PSF Hab] = 12740
+  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
+  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+
+UNION ALL
+
+SELECT
+    'Trámites Apertura de Empresa',
+    14,
+    20,
+    'Registro de Gestor de Residuos',
+    COUNT(P.ID)
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+INNER JOIN Panel_20 P20 WITH (NOLOCK)
+    ON P20._ElementID = P.ID
+INNER JOIN Panel_20_o1 P1 WITH (NOLOCK)
+    ON P20.ID = P1._BaseTableRegisterID
+INNER JOIN Panel_20_o2 P2 WITH (NOLOCK)
+    ON P2._BaseTableRegisterID = P1._BaseTableRegisterID
+WHERE P.IdClaseProceso = 20
+  AND P.IdEstado IN (0,1,2)
+  AND P2.[3_TrámiteGestor] = 1
+  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
+  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+
+ORDER BY Orden;
