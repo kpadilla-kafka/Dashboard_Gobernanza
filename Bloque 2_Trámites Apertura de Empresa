@@ -104,6 +104,58 @@ WHERE P.IdClaseProceso = 20
 
 UNION ALL
 
+-- Permiso Sanitario de Funcionamiento Renovación
+SELECT
+    'Trámites Apertura de Empresa',
+    7,
+    73,
+    'Permiso Sanitario de Funcionamiento Renovación',
+    COUNT(P.ID)
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+INNER JOIN Panel_73 P73 WITH (NOLOCK)
+    ON P73._ElementID = P.ID
+WHERE P.IdClaseProceso = 73
+  AND P.IdEstado IN (0,1,2)
+  AND P73.[3_Tipo de trámite PSF] = 4728
+  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
+  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+
+UNION ALL
+
+-- Permiso Sanitario de Funcionamiento Modificación
+SELECT
+    'Trámites Apertura de Empresa',
+    8,
+    73,
+    'Permiso Sanitario de Funcionamiento Modificación',
+    COUNT(P.ID)
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+INNER JOIN Panel_73 P73 WITH (NOLOCK)
+    ON P73._ElementID = P.ID
+WHERE P.IdClaseProceso = 73
+  AND P.IdEstado IN (0,1,2)
+  AND P73.[3_Tipo de trámite PSF] = 4727
+  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
+  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+
+UNION ALL
+
+-- Permiso Sanitario de Funcionamiento Cancelación
+SELECT
+    'Trámites Apertura de Empresa',
+    9,
+    73,
+    'Permiso Sanitario de Funcionamiento Cancelación',
+    COUNT(P.ID)
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+INNER JOIN Panel_73 P73 WITH (NOLOCK)
+    ON P73._ElementID = P.ID
+WHERE P.IdClaseProceso = 73
+  AND P.IdEstado IN (0,1,2)
+  AND P73.[3_Tipo de trámite PSF] = 4726
+  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
+  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+
 SELECT
     'Trámites Apertura de Empresa',
     10,
