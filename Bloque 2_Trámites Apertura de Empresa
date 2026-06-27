@@ -83,6 +83,9 @@ WHERE P.IdClaseProceso = 36
 
 UNION ALL
 
+/*=========================================================
+  6 - Permiso Sanitario de Funcionamiento
+=========================================================*/
 SELECT
     'Trámites Apertura de Empresa',
     6,
@@ -97,14 +100,17 @@ INNER JOIN Panel_20_o1 P1 WITH (NOLOCK)
 INNER JOIN Panel_20_o4 P4 WITH (NOLOCK)
     ON P4._BaseTableRegisterID = P1._BaseTableRegisterID
 WHERE P.IdClaseProceso = 20
-  AND P.IdEstado IN (0,1,2)
+  AND P.IdEstado <> 7
+  AND P.IdEstado <> 8
   AND P4.[3_Tipo de trámite PSF Hab] = 12739
   AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
   AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
 
 UNION ALL
 
--- Permiso Sanitario de Funcionamiento Renovación
+/*=========================================================
+  7 - PSF Renovación
+=========================================================*/
 SELECT
     'Trámites Apertura de Empresa',
     7,
@@ -113,16 +119,24 @@ SELECT
     COUNT(P.ID)
 FROM AP__BPM_Procesos P WITH (NOLOCK)
 INNER JOIN Panel_73 P73 WITH (NOLOCK)
-    ON P73._ElementID = P.ID
-WHERE P.IdClaseProceso = 73
-  AND P.IdEstado IN (0,1,2)
-  AND P73.[3_Tipo de trámite PSF] = 4728
-  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
-  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+    ON P73._ElementID=P.ID
+INNER JOIN Panel_73_o1 P1 WITH (NOLOCK)
+    ON P73.ID=P1._BaseTableRegisterID
+INNER JOIN Panel_73_o3 P3 WITH (NOLOCK)
+    ON P3._BaseTableRegisterID=P1._BaseTableRegisterID
+WHERE P.IdClaseProceso=73
+AND P.IdEstado<>7
+AND P.IdEstado<>8
+AND P73.[3_Tipo de trámite PSF]=4728
+AND P3.[3_Tipo de trámite PSF Hab]=12739
+AND (@FechaInicio IS NULL OR P.FechaInicio>=@FechaInicio)
+AND (@FechaFin IS NULL OR P.FechaInicio<DATEADD(DAY,1,@FechaFin))
 
 UNION ALL
 
--- Permiso Sanitario de Funcionamiento Modificación
+/*=========================================================
+  8 - PSF Modificación
+=========================================================*/
 SELECT
     'Trámites Apertura de Empresa',
     8,
@@ -131,16 +145,24 @@ SELECT
     COUNT(P.ID)
 FROM AP__BPM_Procesos P WITH (NOLOCK)
 INNER JOIN Panel_73 P73 WITH (NOLOCK)
-    ON P73._ElementID = P.ID
-WHERE P.IdClaseProceso = 73
-  AND P.IdEstado IN (0,1,2)
-  AND P73.[3_Tipo de trámite PSF] = 4727
-  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
-  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+    ON P73._ElementID=P.ID
+INNER JOIN Panel_73_o1 P1 WITH (NOLOCK)
+    ON P73.ID=P1._BaseTableRegisterID
+INNER JOIN Panel_73_o3 P3 WITH (NOLOCK)
+    ON P3._BaseTableRegisterID=P1._BaseTableRegisterID
+WHERE P.IdClaseProceso=73
+AND P.IdEstado<>7
+AND P.IdEstado<>8
+AND P73.[3_Tipo de trámite PSF]=4727
+AND P3.[3_Tipo de trámite PSF Hab]=12739
+AND (@FechaInicio IS NULL OR P.FechaInicio>=@FechaInicio)
+AND (@FechaFin IS NULL OR P.FechaInicio<DATEADD(DAY,1,@FechaFin))
 
 UNION ALL
 
--- Permiso Sanitario de Funcionamiento Cancelación
+/*=========================================================
+  9 - PSF Cancelación
+=========================================================*/
 SELECT
     'Trámites Apertura de Empresa',
     9,
@@ -149,13 +171,24 @@ SELECT
     COUNT(P.ID)
 FROM AP__BPM_Procesos P WITH (NOLOCK)
 INNER JOIN Panel_73 P73 WITH (NOLOCK)
-    ON P73._ElementID = P.ID
-WHERE P.IdClaseProceso = 73
-  AND P.IdEstado IN (0,1,2)
-  AND P73.[3_Tipo de trámite PSF] = 4726
-  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
-  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+    ON P73._ElementID=P.ID
+INNER JOIN Panel_73_o1 P1 WITH (NOLOCK)
+    ON P73.ID=P1._BaseTableRegisterID
+INNER JOIN Panel_73_o3 P3 WITH (NOLOCK)
+    ON P3._BaseTableRegisterID=P1._BaseTableRegisterID
+WHERE P.IdClaseProceso=73
+AND P.IdEstado<>7
+AND P.IdEstado<>8
+AND P73.[3_Tipo de trámite PSF]=4726
+AND P3.[3_Tipo de trámite PSF Hab]=12739
+AND (@FechaInicio IS NULL OR P.FechaInicio>=@FechaInicio)
+AND (@FechaFin IS NULL OR P.FechaInicio<DATEADD(DAY,1,@FechaFin))
 
+UNION ALL
+
+/*=========================================================
+  10 - Permiso de Habilitación
+=========================================================*/
 SELECT
     'Trámites Apertura de Empresa',
     10,
@@ -164,16 +197,95 @@ SELECT
     COUNT(P.ID)
 FROM AP__BPM_Procesos P WITH (NOLOCK)
 INNER JOIN Panel_20 P20 WITH (NOLOCK)
-    ON P20._ElementID = P.ID
+    ON P20._ElementID=P.ID
 INNER JOIN Panel_20_o1 P1 WITH (NOLOCK)
-    ON P20.ID = P1._BaseTableRegisterID
+    ON P20.ID=P1._BaseTableRegisterID
 INNER JOIN Panel_20_o4 P4 WITH (NOLOCK)
-    ON P4._BaseTableRegisterID = P1._BaseTableRegisterID
-WHERE P.IdClaseProceso = 20
-  AND P.IdEstado IN (0,1,2)
-  AND P4.[3_Tipo de trámite PSF Hab] = 12740
-  AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
-  AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
+    ON P4._BaseTableRegisterID=P1._BaseTableRegisterID
+WHERE P.IdClaseProceso=20
+AND P.IdEstado<>7
+AND P.IdEstado<>8
+AND P4.[3_Tipo de trámite PSF Hab]=12740
+AND (@FechaInicio IS NULL OR P.FechaInicio>=@FechaInicio)
+AND (@FechaFin IS NULL OR P.FechaInicio<DATEADD(DAY,1,@FechaFin))
+
+UNION ALL
+
+/*=========================================================
+  11 - Habilitación Renovación
+=========================================================*/
+SELECT
+    'Trámites Apertura de Empresa',
+    11,
+    73,
+    'Permiso de Habilitación Renovación',
+    COUNT(P.ID)
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+INNER JOIN Panel_73 P73 WITH (NOLOCK)
+    ON P73._ElementID=P.ID
+INNER JOIN Panel_73_o1 P1 WITH (NOLOCK)
+    ON P73.ID=P1._BaseTableRegisterID
+INNER JOIN Panel_73_o3 P3 WITH (NOLOCK)
+    ON P3._BaseTableRegisterID=P1._BaseTableRegisterID
+WHERE P.IdClaseProceso=73
+AND P.IdEstado<>7
+AND P.IdEstado<>8
+AND P73.[3_Tipo de trámite PSF]=4728
+AND P3.[3_Tipo de trámite PSF Hab]=12740
+AND (@FechaInicio IS NULL OR P.FechaInicio>=@FechaInicio)
+AND (@FechaFin IS NULL OR P.FechaInicio<DATEADD(DAY,1,@FechaFin))
+
+UNION ALL
+
+/*=========================================================
+  12 - Habilitación Modificación
+=========================================================*/
+SELECT
+    'Trámites Apertura de Empresa',
+    12,
+    73,
+    'Permiso de Habilitación Modificación',
+    COUNT(P.ID)
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+INNER JOIN Panel_73 P73 WITH (NOLOCK)
+    ON P73._ElementID=P.ID
+INNER JOIN Panel_73_o1 P1 WITH (NOLOCK)
+    ON P73.ID=P1._BaseTableRegisterID
+INNER JOIN Panel_73_o3 P3 WITH (NOLOCK)
+    ON P3._BaseTableRegisterID=P1._BaseTableRegisterID
+WHERE P.IdClaseProceso=73
+AND P.IdEstado<>7
+AND P.IdEstado<>8
+AND P73.[3_Tipo de trámite PSF]=4727
+AND P3.[3_Tipo de trámite PSF Hab]=12740
+AND (@FechaInicio IS NULL OR P.FechaInicio>=@FechaInicio)
+AND (@FechaFin IS NULL OR P.FechaInicio<DATEADD(DAY,1,@FechaFin))
+
+UNION ALL
+
+/*=========================================================
+  13 - Habilitación Cancelación
+=========================================================*/
+SELECT
+    'Trámites Apertura de Empresa',
+    13,
+    73,
+    'Permiso de Habilitación Cancelación',
+    COUNT(P.ID)
+FROM AP__BPM_Procesos P WITH (NOLOCK)
+INNER JOIN Panel_73 P73 WITH (NOLOCK)
+    ON P73._ElementID=P.ID
+INNER JOIN Panel_73_o1 P1 WITH (NOLOCK)
+    ON P73.ID=P1._BaseTableRegisterID
+INNER JOIN Panel_73_o3 P3 WITH (NOLOCK)
+    ON P3._BaseTableRegisterID=P1._BaseTableRegisterID
+WHERE P.IdClaseProceso=73
+AND P.IdEstado<>7
+AND P.IdEstado<>8
+AND P73.[3_Tipo de trámite PSF]=4726
+AND P3.[3_Tipo de trámite PSF Hab]=12740
+AND (@FechaInicio IS NULL OR P.FechaInicio>=@FechaInicio)
+AND (@FechaFin IS NULL OR P.FechaInicio<DATEADD(DAY,1,@FechaFin))
 
 UNION ALL
 
