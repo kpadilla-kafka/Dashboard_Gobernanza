@@ -308,4 +308,8 @@ WHERE P.IdClaseProceso = 20
   AND (@FechaInicio IS NULL OR P.FechaInicio >= @FechaInicio)
   AND (@FechaFin IS NULL OR P.FechaInicio < DATEADD(DAY,1,@FechaFin))
 
+UNION ALL
+
+
+
 ORDER BY Orden;
