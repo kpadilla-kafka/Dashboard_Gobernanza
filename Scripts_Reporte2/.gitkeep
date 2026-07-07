@@ -23,3 +23,10 @@ REPORTE 2
                    │
                    ▼
          ENE...DIC + Cantidad
+
+
+1. Crea un catálogo de trámites (@Catalogo): contiene la lista completa de los trámites que deben aparecer en el reporte, aunque no tengan registros.
+2. Obtiene los datos reales (@Datos): consulta AP__BPM_Procesos y los paneles correspondientes para traer la FechaInicio de cada trámite.
+3. Une ambas tablas con un LEFT JOIN: garantiza que todos los trámites del catálogo aparezcan en el resultado, incluso si tienen 0 registros.
+4. Agrupa por meses: cuenta cuántos trámites hubo en enero, febrero, marzo... diciembre.
+5. Calcula el total: la columna Cantidad es la suma de todos los meses y debe coincidir con el total del Reporte 1.
