@@ -1,1 +1,25 @@
+Arquitectura Propuesta:
+               
+REPORTE 2
 
+         ┌────────────────────┐
+         │     @Catalogo       │
+         ├────────────────────┤
+         │ Todos los trámites │
+         │ (uno por fila)      │
+         └─────────┬───────────┘
+                   │
+                   │ LEFT JOIN
+                   │
+         ┌─────────▼───────────┐
+         │      @Datos         │
+         ├─────────────────────┤
+         │ Todas las fechas    │
+         │ reales encontradas  │
+         └─────────┬───────────┘
+                   │
+                   ▼
+              GROUP BY
+                   │
+                   ▼
+         ENE...DIC + Cantidad
